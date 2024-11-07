@@ -1,0 +1,10 @@
+{
+    "/employeelogin/ng/version": {
+      "target": "https://apim.quickwork.co",
+      "secure": true,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  
+  

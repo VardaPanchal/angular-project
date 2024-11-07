@@ -1,0 +1,87 @@
+<main class="main">
+  <h1>Resource Booking Form</h1>
+
+  <div class="button-group">
+    <button (click)="switchForm('booking')" [class.active]="currentForm === 'booking'">Booking</button>
+    <button (click)="switchForm('delete')" [class.active]="currentForm === 'delete'">Delete Booking</button>
+    <button (click)="switchForm('update')" [class.active]="currentForm === 'update'">Update Booking</button>
+  </div>
+
+  <div *ngIf="currentForm === 'booking'">
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" [(ngModel)]="form.name" name="name" required />
+      </div>
+
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="form.email" name="email" required />
+      </div>
+
+      <div>
+        <label for="resourceType">Resource Type:</label>
+        <select id="resourceType" (change)="onResourceTypeChange($event)" name="resourceType" required>
+          <option value="" disabled selected>Select a resource type</option>
+          <option *ngFor="let resource of resources" [value]="resource.value">
+            {{ resource.text }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label for="slot">Slot:</label>
+        <select id="slot" [(ngModel)]="selectedSlot" name="slot" required>
+          <option value="" disabled selected>Select a slot</option>
+          <option *ngFor="let slot of slots" [value]="slot">
+            {{ slot }}
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="!form.name || !form.email || !selectedResource || !selectedSlot">Submit</button>
+    </form>
+
+    <div *ngIf="formSubmitted">
+      <h3>Form Submitted Successfully</h3>
+    </div>
+  </div>
+
+  <div *ngIf="currentForm === 'update'">
+    <h3>Check Booking to Update</h3>
+    <form (ngSubmit)="onCheckBooking()">
+      <label for="checkName">Name:</label>
+      <input type="text" id="checkName" [(ngModel)]="form.name" name="checkName" required />
+
+      <label for="checkEmail">Email:</label>
+      <input type="email" id="checkEmail" [(ngModel)]="form.email" name="checkEmail" required />
+
+      <button type="submit" [disabled]="!form.name || !form.email">Check Booking</button>
+    </form>
+
+    <div *ngIf="showUpdateForm">
+      <h3>Update Email</h3>
+      <form (ngSubmit)="onUpdateBooking()">
+        <div>
+          <label for="emailUpdate">New Email:</label>
+          <input type="email" id="emailUpdate" [(ngModel)]="updateForm.email" name="email" required />
+        </div>
+
+        <button type="submit" [disabled]="!updateForm.email">Update Booking</button>
+        </form>
+        </div>
+        </div>
+
+  <div *ngIf="currentForm === 'delete'">
+    <h3>Delete Booking</h3>
+    <form (ngSubmit)="onDeleteBooking()">
+      <label for="deleteName">Name:</label>
+      <input type="text" id="deleteName" [(ngModel)]="deleteForm.name" name="deleteName" required />
+
+      <label for="deleteEmail">Email:</label>
+      <input type="email" id="deleteEmail" [(ngModel)]="deleteForm.email" name="deleteEmail" required />
+
+      <button type="submit" [disabled]="!deleteForm.name || !deleteForm.email">Delete Booking</button>
+    </form>
+  </div>
+</main>
